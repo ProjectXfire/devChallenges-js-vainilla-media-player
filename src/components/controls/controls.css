@@ -1,0 +1,71 @@
+.progress__time {
+  display: flex;
+  justify-content: space-between;
+  font-size: var(--text-small);
+  color: var(--color-3);
+}
+
+.progress__bar {
+  width: 100%;
+  margin-top: 5px;
+  position: relative;
+}
+
+.progress__bar-background {
+  width: 100%;
+  height: 5px;
+  background-color: var(--color-4);
+  border-radius: var(--border-radius-1);
+}
+
+.progress__bar-track {
+  height: 5px;
+  position: absolute;
+  top: 0;
+  background-color: var(--color-1);
+  border-radius: var(--border-radius-1);
+}
+
+.progress__bar-action {
+  width: 100%;
+  height: 5px;
+  position: absolute;
+  top: 0;
+  background-color: transparent;
+  border-radius: var(--border-radius-1);
+}
+
+.controls {
+  margin-top: 30px;
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+.controls__action {
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.controls__action:active {
+  scale: 0.95;
+}
+
+.play {
+  display: none;
+  background-color: var(--color-1);
+  border-radius: var(--border-circle);
+}
+
+.is-active {
+  display: flex;
+}
+
+.controls__action img {
+  width: 100%;
+}
