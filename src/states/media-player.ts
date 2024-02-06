@@ -12,6 +12,7 @@ export class MediaPlayer {
     this.tracks = tracks;
     this.audio = new Audio();
     this.audio.src = tracks[this.currentIndexSong].audioUrl;
+    this.audio.volume = 0.5;
     this.selectedTrack = tracks[this.currentIndexSong];
     this.tracks = tracks;
     this.setupListener();
@@ -31,13 +32,14 @@ export class MediaPlayer {
   setupListener() {
     this.audio.addEventListener("timeupdate", this.calculateTime.bind(this));
     this.audio.addEventListener("ended", this.autoPlay.bind(this));
+    document.addEventListener("update-volume", this.updateVolumen.bind(this));
   }
 
   getSelectedTrack(): TTrack {
     return this.selectedTrack;
   }
 
-  calculateTime() {
+  private calculateTime() {
     const { duration, currentTime } = this.audio;
     const minDuration = convertDurationInString(duration);
     const minCurrentTime = convertCurrentTimeInString(currentTime);
@@ -51,7 +53,7 @@ export class MediaPlayer {
     document.dispatchEvent(calculateEvent);
   }
 
-  updateInfoTrack() {
+  private updateInfoTrack() {
     const infoDataEvent = new CustomEvent("update-data-track", {
       detail: {
         coverUrl: this.selectedTrack.coverUrl,
@@ -62,7 +64,7 @@ export class MediaPlayer {
     document.dispatchEvent(infoDataEvent);
   }
 
-  autoPlay() {
+  private autoPlay() {
     const nextSongIndex = this.currentIndexSong + 1;
     if (nextSongIndex < this.tracks.length) {
       this.currentIndexSong = nextSongIndex;
@@ -74,6 +76,11 @@ export class MediaPlayer {
     this.audio.src = this.selectedTrack.audioUrl;
     this.updateInfoTrack();
     this.startPlaying();
+  }
+
+  private updateVolumen(e: any) {
+    const { value } = e.detail;
+    this.audio.volume = value / 100;
   }
 
   changeCurrentTime(newTimePercentage: number) {
